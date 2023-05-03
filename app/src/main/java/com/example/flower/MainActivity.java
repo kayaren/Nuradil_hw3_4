@@ -7,20 +7,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.flower.databinding.ActivityMainBinding;
 import com.example.flower.model.DetailActivity;
 import com.example.flower.model.Flower;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements flowerClick{
-    RecyclerView recyclerView;
     FlowerAdapter adapter;
     ArrayList<Flower> arrayList;
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         initViews();
         fillList();
         initAdapter();
@@ -28,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements flowerClick{
     }
 
     private void initViews(){
-        recyclerView = findViewById(R.id.recyclerView);
 
     }
     private void fillList() {
@@ -41,18 +42,16 @@ public class MainActivity extends AppCompatActivity implements flowerClick{
 
     private void initAdapter(){
         adapter = new FlowerAdapter(arrayList,this);
-        recyclerView.setAdapter(adapter);
+        binding.recyclerView.setAdapter(adapter);
 
     }
 
     @Override
     public void flowerClicked(Flower flower) {
         Intent intent = new Intent(this , DetailActivity.class);
-        intent.putExtra("name ", flower.getName());
-        intent.putExtra("color", flower.getColor());
-        intent.putExtra("sum", flower.getSum());
-        intent.putExtra("image",flower.getImage());
+        intent.putExtra("flower" , flower);
         startActivity(intent);
+
 
     }
 }

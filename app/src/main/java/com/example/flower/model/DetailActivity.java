@@ -8,34 +8,33 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.flower.DetailFragment;
 import com.example.flower.R;
+import com.example.flower.databinding.ActivityDetailBinding;
 
 public class DetailActivity extends AppCompatActivity {
 
-    TextView name;
-    TextView color;
-    TextView breed;
-    ImageView imageView;
+   ActivityDetailBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-        viewsBind();
+        binding = ActivityDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         Flower flower = (Flower) getIntent().getSerializableExtra("flower");
-        name.setText(flower.getName());
-        color.setText(flower.getColor());
-        breed.setText(flower.getSum());
-        imageView.setImageResource(flower.getImage());
+        DetailFragment fragment = new DetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("flower " , flower);
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment)
+                .commit();
+
 
 
     }
-    private void viewsBind() {
-        name = findViewById(R.id.Name);
-        color = findViewById(R.id.Color);
-        breed = findViewById(R.id.sum);
-        imageView = findViewById(R.id.Image);
-    }
+
+
 
 
 }

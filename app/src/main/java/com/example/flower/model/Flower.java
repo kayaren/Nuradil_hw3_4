@@ -1,6 +1,8 @@
 package com.example.flower.model;
 
-public class Flower {
+import java.io.Serializable;
+
+public class Flower implements Serializable {
    int image;
    String name;
    String color;
